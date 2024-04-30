@@ -34,7 +34,7 @@ public class UserController {
         return "form";
     }
 
-    @PostMapping("users/save")
+    @PostMapping("/users/save")
     public String saveUser(User user, RedirectAttributes ra) {
 
         List<User> userList = service.listAll();
@@ -59,19 +59,23 @@ public class UserController {
 
 
     @GetMapping("/users/edit/{id}")
-    public String showEditForm(@PathVariable("id") Integer id, Model model) throws UserNotFoundException {
-        User user = service.get(id);
-        if (user.isEnable()) {
-            model.addAttribute("user", user);
-            model.addAttribute("pageTitle", "Alterar o Usuário com id: " + id);
-            return "form";
-        } else {
-            return "redirect:/users";
+    public String showEditForm(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) throws UserNotFoundException {
+
+        List<User> userList = service.listAll();
+        for (User u : userList) {
+            if (u.getId().equals(id) && u.isEnable()) {
+                User user = service.get(id);
+                model.addAttribute("user", user);
+                model.addAttribute("pageTitle", "Alterar o Usuário com id: " + id);
+                return "form";
+            }
         }
+        ra.addFlashAttribute("message", "O usuário não pode ser modificado!");
+        return "redirect:/users";
     }
 
-    @GetMapping("users/delete/{id}")
-    public String deleteUser(@PathVariable("id") Integer id, Model model, RedirectAttributes ra) throws UserNotFoundException {
+    @GetMapping("/users/delete/{id}")
+    public String deleteUser(@PathVariable("id") Integer id, RedirectAttributes ra) throws UserNotFoundException {
 
         List<User> userList = service.listAll();
         for (User u : userList) {
