@@ -8,11 +8,11 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" type="text/css" th:href="@{webjars/bootstrap/css/bootstrap.min.css}">
 
-    <title>Users</title>
+    <title>[[${pageTitle}]]</title>
 </head>
 <body>
 <div class="container-fluid text-center">
-    <h1 class="m-sm-4">Gerenciamento de Usuários</h1>
+    <h1 class="m-sm-4">[[${pageTitle}]]</h1>
     <div class="m-md-3">
         <a class="h3 " th:href="@{/users/new}">Adicionar novo Usuário</a>
     </div>

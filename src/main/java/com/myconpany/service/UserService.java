@@ -32,6 +32,8 @@ public class UserService {
         throw new UserNotFoundException("Usuário com id: " + id + " não foi encontrado");
     }
 
+
+
     public User save(User user){
         return repo.save(user);
     }
